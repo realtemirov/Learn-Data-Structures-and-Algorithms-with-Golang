@@ -9,6 +9,10 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
 
 1. [Section 1: Introduction to Data Structures and Algorithms and the Go Language](#section-1-introduction-to-data-structures-and-algorithms-and-the-go-language)
     1. [Chapter 1: Data Structures and Algorithms](#chapter-1-data-structures-and-algorithms)
+        * [List](./Chapter01/List/list.go)
+        * [Tuples](./Chapter01/Tuples/tuples.go)
+        * [Heap](./Chapter01/Heap/heap.go)
+        * [Adapter](./Chapter01/Adapter/adapter.go)
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
 
 
@@ -41,6 +45,7 @@ patterns
 * [List](./Chapter01/List/list.go)
 * [Tuples](./Chapter01/Tuples/tuples.go)
 * [Heap](./Chapter01/Heap/heap.go)
+* [Adapter](./Chapter01/Adapter/adapter.go)
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
 
