@@ -15,6 +15,7 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
         * [Adapter](#adapter)
         * [Bridge](#bridge)
         * [Composite](#composite)
+        * [Decorator](#decorator)
 
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
 
@@ -68,6 +69,10 @@ patterns
 #### Composite
 [Code](./Chapter01/Composite/composite.go)
 ![Composite result](./images/composite.png)
+
+#### Decorator
+[Code](./Chapter01/Decorator/decorator.go)
+![Decorator result](./images/decorator.png)
 
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
