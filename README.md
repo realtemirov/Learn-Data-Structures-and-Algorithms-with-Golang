@@ -13,6 +13,7 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
         * [Tuples](./Chapter01/Tuples/tuples.go)
         * [Heap](./Chapter01/Heap/heap.go)
         * [Adapter](./Chapter01/Adapter/adapter.go)
+        * [Bridge](./Chapter01/Bridge/bridge.go)
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
 
 
@@ -46,6 +47,7 @@ patterns
 * [Tuples](./Chapter01/Tuples/tuples.go)
 * [Heap](./Chapter01/Heap/heap.go)
 * [Adapter](./Chapter01/Adapter/adapter.go)
+* [Bridge](./Chapter01/Bridge/bridge.go)
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
 
