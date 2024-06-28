@@ -47,7 +47,7 @@ patterns
 ![Data structures](./images/data-structures.png)
 
 #### List
-* [Code](./Chapter01/List/list.go)
+[Code](./Chapter01/List/list.go)
 ![List result](./images/list.png)
 
 #### Tuples
@@ -59,7 +59,16 @@ patterns
 ![Heap result](./images/heap.png)
 
 #### Adapter
+
+![Adapter example](https://refactoring.guru/images/patterns/content/adapter/adapter-en-2x.png?id=e0ab0f6103b0b7b0648a8fda592ffab8)
+
+##### Read more about the Adapter pattern:
+
+[Refactoring.guru](https://refactoring.guru/design-patterns/adapter) \
+[GolangByExample.com](https://golangbyexample.com/adapter-design-pattern-go/)
+
 [Code](./Chapter01/Adapter/adapter.go)
+
 ![Adapter result](./images/adapter.png)
 
 #### Bridge
