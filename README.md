@@ -84,7 +84,15 @@ patterns
 ![Bridge result](./images/bridge.png)
 
 #### Composite
+
+![Composite example](https://refactoring.guru/images/patterns/content/composite/composite.png?id=73bcf0d94db360b636cd745f710d19db)
+
+##### Read more about the Composite pattern:
+[Refactoring.guru](https://refactoring.guru/design-patterns/composite) \
+[GolangByExample.com](https://golangbyexample.com/composite-design-pattern-golang)
+
 [Code](./Chapter01/Composite/composite.go)
+
 ![Composite result](./images/composite.png)
 
 #### Decorator
