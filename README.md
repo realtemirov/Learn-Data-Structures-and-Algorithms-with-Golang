@@ -72,7 +72,15 @@ patterns
 ![Adapter result](./images/adapter.png)
 
 #### Bridge
+
+![Bridge example](https://refactoring.guru/images/patterns/content/bridge/bridge-2x.png?id=1e905ae5742e5cd10a7eb0e3175ef00d)
+
+##### Read more about the Bridge pattern:
+[Refactoring.guru](https://refactoring.guru/design-patterns/bridge) \
+[GolangByExample.com](https://golangbyexample.com/bridge-design-pattern-in-go/)
+
 [Code](./Chapter01/Bridge/bridge.go)
+
 ![Bridge result](./images/bridge.png)
 
 #### Composite
