@@ -18,6 +18,7 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
         * [Decorator](#decorator)
         * [Facade](#facade)
         * [Flyweight](#flyweight)
+        * [Private Class](#private-class)
 
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
 
@@ -132,6 +133,12 @@ patterns
 [Code](./Chapter01/Flyweight/flyweight.go)
 
 ![Flyweight result](./images/flyweight.png)
+
+## Private Class
+
+[Code](./Chapter01/PrivateClass/private_class.go)
+
+![Private Class result](./images/private_class.png)
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
 
