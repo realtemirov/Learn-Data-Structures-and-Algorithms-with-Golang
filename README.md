@@ -60,7 +60,7 @@ patterns
 
 #### Adapter
 
-![Adapter example](https://refactoring.guru/images/patterns/content/adapter/adapter-en-2x.png?id=e0ab0f6103b0b7b0648a8fda592ffab8)
+![Adapter example](https://refactoring.guru/images/patterns/content/adapter/adapter-en-2x.png)
 
 ##### Read more about the Adapter pattern:
 
@@ -73,7 +73,7 @@ patterns
 
 #### Bridge
 
-![Bridge example](https://refactoring.guru/images/patterns/content/bridge/bridge-2x.png?id=1e905ae5742e5cd10a7eb0e3175ef00d)
+![Bridge example](https://refactoring.guru/images/patterns/content/bridge/bridge-2x.png)
 
 ##### Read more about the Bridge pattern:
 [Refactoring.guru](https://refactoring.guru/design-patterns/bridge) \
@@ -85,7 +85,7 @@ patterns
 
 #### Composite
 
-![Composite example](https://refactoring.guru/images/patterns/content/composite/composite.png?id=73bcf0d94db360b636cd745f710d19db)
+![Composite example](https://refactoring.guru/images/patterns/content/composite/composite.png)
 
 ##### Read more about the Composite pattern:
 [Refactoring.guru](https://refactoring.guru/design-patterns/composite) \
@@ -96,7 +96,15 @@ patterns
 ![Composite result](./images/composite.png)
 
 #### Decorator
+
+![Decorator example](https://refactoring.guru/images/patterns/content/decorator/decorator.png)
+
+##### Read more about the Decorator pattern:
+[Refactoring.guru](https://refactoring.guru/design-patterns/decorator) \
+[GolangByExample.com](https://golangbyexample.com/decorator-pattern-golang/)
+
 [Code](./Chapter01/Decorator/decorator.go)
+
 ![Decorator result](./images/decorator.png)
 
 
