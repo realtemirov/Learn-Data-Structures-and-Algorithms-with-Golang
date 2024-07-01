@@ -46,23 +46,23 @@ patterns
 
 ![Data structures](./images/data-structures.png)
 
-#### List
+## List
 [Code](./Chapter01/List/list.go)
 ![List result](./images/list.png)
 
-#### Tuples
+## Tuples
 [Code](./Chapter01/Tuples/tuples.go)
 ![Tuples result](./images/tuples.png)
 
-#### Heap
+## Heap
 [Code](./Chapter01/Heap/heap.go)
 ![Heap result](./images/heap.png)
 
-#### Adapter
+## Adapter
 
 ![Adapter example](https://refactoring.guru/images/patterns/content/adapter/adapter-en-2x.png)
 
-##### Read more about the Adapter pattern:
+### Read more about the Adapter pattern:
 
 [Refactoring.guru](https://refactoring.guru/design-patterns/adapter) \
 [GolangByExample.com](https://golangbyexample.com/adapter-design-pattern-go/)
@@ -71,11 +71,11 @@ patterns
 
 ![Adapter result](./images/adapter.png)
 
-#### Bridge
+## Bridge
 
 ![Bridge example](https://refactoring.guru/images/patterns/content/bridge/bridge-2x.png)
 
-##### Read more about the Bridge pattern:
+### Read more about the Bridge pattern:
 [Refactoring.guru](https://refactoring.guru/design-patterns/bridge) \
 [GolangByExample.com](https://golangbyexample.com/bridge-design-pattern-in-go/)
 
@@ -83,11 +83,11 @@ patterns
 
 ![Bridge result](./images/bridge.png)
 
-#### Composite
+## Composite
 
 ![Composite example](https://refactoring.guru/images/patterns/content/composite/composite.png)
 
-##### Read more about the Composite pattern:
+### Read more about the Composite pattern:
 [Refactoring.guru](https://refactoring.guru/design-patterns/composite) \
 [GolangByExample.com](https://golangbyexample.com/composite-design-pattern-golang)
 
@@ -95,11 +95,11 @@ patterns
 
 ![Composite result](./images/composite.png)
 
-#### Decorator
+## Decorator
 
 ![Decorator example](https://refactoring.guru/images/patterns/content/decorator/decorator.png)
 
-##### Read more about the Decorator pattern:
+### Read more about the Decorator pattern:
 [Refactoring.guru](https://refactoring.guru/design-patterns/decorator) \
 [GolangByExample.com](https://golangbyexample.com/decorator-pattern-golang/)
 
