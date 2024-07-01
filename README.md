@@ -16,6 +16,7 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
         * [Bridge](#bridge)
         * [Composite](#composite)
         * [Decorator](#decorator)
+        * [Facade](#facade)
 
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
 
@@ -107,6 +108,17 @@ patterns
 
 ![Decorator result](./images/decorator.png)
 
+## Facade
+
+![Facade example](https://refactoring.guru/images/patterns/content/facade/facade.png)
+
+### Read more about the Facade pattern:
+[Refactoring.guru](https://refactoring.guru/design-patterns/facade) \
+[GolangByExample.com](https://golangbyexample.com/facade-design-pattern-in-golang/)
+
+[Code](./Chapter01/Facade/facade.go)
+
+![Facade result](./images/facade.png)
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
 
