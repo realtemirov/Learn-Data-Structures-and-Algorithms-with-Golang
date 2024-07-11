@@ -5,8 +5,6 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
 
 0. [Hello World](#hello-world-)
 
- 
-
 1. [Section 1: Introduction to Data Structures and Algorithms and the Go Language](#section-1-introduction-to-data-structures-and-algorithms-and-the-go-language)
     1. [Chapter 1: Data Structures and Algorithms](#chapter-1-data-structures-and-algorithms)
         * [List](#list)
@@ -20,6 +18,10 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
         * [Flyweight](#flyweight)
         * [Private Class](#private-class)
         * [Proxy](#proxy)
+        * [Flow chart](#flow-chart)
+        * [Pseudo code](#pseudo-code)
+        * [Complexity and performance analysis](#complexity-and-performance-analysis)
+        * [Complexity](#complexity)
 
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
 
@@ -152,6 +154,59 @@ patterns
 [Code](./Chapter01/Proxy/proxy.go)
 
 ![Proxy result](./images/proxy.png)
+
+## Flow chart
+Example of Flow chart
+
+![Flow chart](./images/flow_chart.png)
+
+## Pseudo code
+Example of pseudo code
+```pseudo-code
+maximum(arr) {
+    n <- len(arr)
+    max <- arr[0]
+    for k <-0, n do {
+        if arr[k] > max {
+            max <-arr[k]
+        }
+    }
+    return max
+}
+```
+
+## Complexity and performance analysis
+The complexity is how the algorithm scales when the number
+of input parameters increases. 
+
+Performance is a measure of time, space, memory, and other
+parameters
+
+## Complexity
+
+[Code](./Chapter01/Complexity/complexity.go)
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var (
+		m [10]int
+		k int
+	)
+
+	for k = 0; k < 10; k++ {
+		m[k] = k + 200
+		fmt.Printf("Element [%d] = %d\n", k, m[k])
+	}
+}
+```
+
+![Result of Complexity](./images/complexity.png)
+
+## BigO notation
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
 
