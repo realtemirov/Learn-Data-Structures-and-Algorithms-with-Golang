@@ -19,6 +19,7 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
         * [Facade](#facade)
         * [Flyweight](#flyweight)
         * [Private Class](#private-class)
+        * [Proxy](#proxy)
 
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
 
@@ -139,6 +140,18 @@ patterns
 [Code](./Chapter01/PrivateClass/private_class.go)
 
 ![Private Class result](./images/private_class.png)
+
+## Proxy
+
+![Proxy exampl](https://refactoring.guru/images/patterns/content/proxy/proxy.png)
+
+### Read more about the Proxy pattern:
+[Refaactoring.guru](https://refactoring.guru/design-patterns/proxy) \
+[GolangByExample.com](https://golangbyexample.com/proxy-design-pattern-in-golang/)
+
+[Code](./Chapter01/Proxy/proxy.go)
+
+![Proxy result](./images/proxy.png)
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
 
