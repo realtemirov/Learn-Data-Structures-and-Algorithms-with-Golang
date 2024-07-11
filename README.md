@@ -216,6 +216,7 @@ Using Big O notation, the constant time *O(1)*, linear time *O(n)*, logarithmic 
 ## Linear complexity
 
 [Code](./Chapter01/LinearComplexity/linear_complexity.go)
+
 ```go
 package main
 
@@ -235,6 +236,32 @@ func main() {
 ```
 
 ![Result of Linear Complexity](./images/linear_complexity.png)
+
+## Quadratic complexit
+
+[Code](./Chapter01/QuadraticComplexity/quadratic_complexity.go)
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var (
+		k, l int
+	)
+
+	for k = 1; k <= 10; k++ {
+		fmt.Println("Multiplication Table", k)
+		for l = 1; l <= 10; l++ {
+			var x int = l * k
+			fmt.Println(x)
+		}
+	}
+}
+```
+
+![Result of Quadratic Complexity](./images/quadratic_complexity.png)
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
 
