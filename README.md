@@ -22,6 +22,7 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
         * [Pseudo code](#pseudo-code)
         * [Complexity and performance analysis](#complexity-and-performance-analysis)
         * [Complexity](#complexity)
+        * [Linear Complexity](#linear-complexity)
 
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
 
@@ -207,6 +208,33 @@ func main() {
 ![Result of Complexity](./images/complexity.png)
 
 ## BigO notation
+
+*T(n)=O(n)*
+
+Using Big O notation, the constant time *O(1)*, linear time *O(n)*, logarithmic time *O(logn)*, cubic time *O(n^3)* and quadratic time *O(n^2)* complexity are different complexity types for an algorithm.
+
+## Linear complexity
+
+[Code](./Chapter01/LinearComplexity/linear_complexity.go)
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var (
+		m [10]int
+		k int
+	)
+
+	for k = 0; k < 10; k++ {
+		m[k] = k * 200
+		fmt.Printf("Element[%d] = %d\n", k, m[k])
+	}
+}
+```
+
+![Result of Linear Complexity](./images/linear_complexity.png)
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
 
