@@ -23,6 +23,9 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
         * [Complexity and performance analysis](#complexity-and-performance-analysis)
         * [Complexity](#complexity)
         * [Linear Complexity](#linear-complexity)
+        * [Quadratic Complexity](#quadratic-complexity)
+		* [Cubic Complexity](#cubic-complexity)
+		* [Logarithmic Complexity](#logarithmic-complexity)
 
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
 
@@ -33,6 +36,16 @@ This is the traditional "Hello World" program in Go. It is the first program tha
 You can run the program below by copying the code into a file named `hello-world.go` and running `go run hello-world.go` in your terminal.
 
 [Code](./HelloWorld/hello_world.go)
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, World!")
+}
+```
 
 ![Hello World](./images/hello_world.png)
 
@@ -54,15 +67,119 @@ patterns
 ![Data structures](./images/data-structures.png)
 
 ## List
+
 [Code](./Chapter01/List/list.go)
+
+```go
+package main
+
+import (
+	"container/list"
+	"fmt"
+)
+
+func main() {
+	var intList list.List
+
+	intList.PushBack(11)
+	intList.PushBack(23)
+	intList.PushBack(34)
+
+	for element := intList.Front(); element != nil; element = element.Next() {
+		fmt.Println(element.Value.(int))
+	}
+}
+```
+
 ![List result](./images/list.png)
 
 ## Tuples
+
 [Code](./Chapter01/Tuples/tuples.go)
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+func powerSeries(a int) (int, int) {
+	return a * a, a * a * a
+}
+
+func powerSeriesNamed(a int) (square int, cube int) {
+	square = a * a
+	cube = a * a * a
+	return
+}
+
+func powerSeriesError(a int) (int, int, error) {
+	var square int = a * a
+	var cube int = a * a * a
+	return square, cube, nil
+}
+
+func main() {
+	var square int
+	var cube int
+
+	square, cube = powerSeries(3)
+
+	fmt.Println("Square", square, "Cube", cube)
+	fmt.Println(powerSeriesNamed(4))
+	fmt.Println(powerSeriesError(5))
+}
+```
+
 ![Tuples result](./images/tuples.png)
 
 ## Heap
+
 [Code](./Chapter01/Heap/heap.go)
+
+```go
+package main
+
+import (
+	"container/heap"
+	"fmt"
+)
+
+type IntegerHeap []int
+
+func (iheap IntegerHeap) Len() int { return len(iheap) }
+
+func (iheap IntegerHeap) Less(i, j int) bool { return iheap[i] < iheap[j] }
+
+func (iheap IntegerHeap) Swap(i, j int) { iheap[i], iheap[j] = iheap[j], iheap[i] }
+
+func (iheap *IntegerHeap) Push(heapintf interface{}) {
+	*iheap = append(*iheap, heapintf.(int))
+}
+
+func (iheap *IntegerHeap) Pop() interface{} {
+	var n int
+	var x1 int
+	var previous IntegerHeap = *iheap
+	n = len(previous)
+	x1 = previous[n-1]
+	*iheap = previous[0 : n-1]
+	return x1
+}
+
+func main() {
+	var intHeap *IntegerHeap = &IntegerHeap{1, 4, 5}
+	heap.Init(intHeap)
+	heap.Push(intHeap, 2)
+	fmt.Printf("minimum: %d\n", (*intHeap)[0])
+
+	for intHeap.Len() > 0 {
+		fmt.Printf("%d \n", heap.Pop(intHeap))
+	}
+}
+```
+
 ![Heap result](./images/heap.png)
 
 ## Adapter
@@ -178,7 +295,7 @@ maximum(arr) {
 
 ## Complexity and performance analysis
 The complexity is how the algorithm scales when the number
-of input parameters increases. 
+of input parameters increases.
 
 Performance is a measure of time, space, memory, and other
 parameters
@@ -262,6 +379,95 @@ func main() {
 ```
 
 ![Result of Quadratic Complexity](./images/quadratic_complexity.png)
+
+## Cubic Complexity
+
+[Code](./Chapter01/CubicComplexity/cubic_complexity.go)
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var k, l, m int
+
+	var arr [10][10][10]int
+
+	for k = 0; k < 10; k++ {
+		for l = 0; l < 10; l++ {
+			for m = 0; m < 10; m++ {
+				arr[k][l][m] = 1
+				fmt.Println("Element value ", k, l, m, arr[k][l][m])
+			}
+		}
+	}
+}
+```
+
+![Result of Cubic complexity](./images/cubic_complexity.png)
+
+## Logarithmic complexity
+
+[Code](./Chapter01/LogarithmicComplexity/logarithmic_complexity.go)
+
+```go
+package main
+
+import "fmt"
+
+type Tree struct {
+	LeftNode  *Tree
+	Value     int
+	RightNode *Tree
+}
+
+func (tree *Tree) insert(m int) {
+	if tree != nil {
+		if tree.LeftNode == nil {
+			tree.LeftNode = &Tree{nil, m, nil}
+		} else {
+			if tree.RightNode == nil {
+				tree.RightNode = &Tree{nil, m, nil}
+			} else {
+				if tree.LeftNode != nil {
+					tree.LeftNode.insert(m)
+				} else {
+					tree.RightNode.insert(m)
+				}
+			}
+		}
+	} else {
+		tree = &Tree{nil, m, nil}
+	}
+}
+
+func print(tree *Tree) {
+	if tree != nil {
+		fmt.Println("Value", tree.Value)
+		fmt.Printf("Tree Node Left")
+		print(tree.LeftNode)
+		fmt.Printf("Tree Node Right")
+		print(tree.RightNode)
+	} else {
+		fmt.Printf("Nil\n")
+	}
+}
+
+func main() {
+	var tree *Tree = &Tree{nil, 1, nil}
+	print(tree)
+	tree.insert(3)
+	print(tree)
+	tree.insert(5)
+	print(tree)
+	tree.LeftNode.insert(7)
+	print(tree)
+}
+```
+
+![Result of Logarithmic Complexity](./images/logarithmic_complexity.png)
+
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
 
