@@ -32,6 +32,7 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
 
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
         * [Arrays](#arrays)
+		* [The Len function]
 
 ## Hello World !
 
@@ -1036,6 +1037,55 @@ func main() {
 ```
 
 ![Result of Arrays](./images/arrays.png)
+
+## The len function
+
+[Code](./Chapter02/02-Slices/basic_slice.go)
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var slice = []int{1, 3, 5, 6}
+	slice = append(slice, 8)
+	fmt.Println("Capacity", cap(slice))
+	fmt.Println("Length", len(slice))
+}
+```
+
+![Result of function](./images/slice_len_function.png)
+
+## Slice function
+
+[Code](./Chapter02/02-Slices/slices.go)
+
+```go
+package main
+
+import "fmt"
+
+func twiceValue(slice []int) {
+	var i int
+	var value int
+	for i, value = range slice {
+		slice[i] = 2 * value
+	}
+}
+
+func main() {
+	var slice = []int{1, 3, 5, 6}
+	twiceValue(slice)
+
+	var i int
+	for i = 0; i < len(slice); i++ {
+		fmt.Println("new slice value ", slice[i])
+	}
+}
+```
+
+![Result of function](./images/slices.png)
 
 ## Contributing
 
