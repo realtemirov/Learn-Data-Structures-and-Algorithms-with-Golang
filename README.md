@@ -27,9 +27,11 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
 		* [Cubic Complexity](#cubic-complexity)
 		* [Logarithmic Complexity](#logarithmic-complexity)
         * [Brute force algorithm](#brute-force-algorithms)
+		* [Divede and Conquer Algorithms](#divede-and-conquer-algorithms)
+		* [Backtracking algorithms](#backtracking-algorithms)
 
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
-
+        * [Arrays](#arrays)
 
 ## Hello World !
 
@@ -69,7 +71,7 @@ patterns
 
 ## List
 
-[Code](./Chapter01/List/list.go)
+[Code](./Chapter01/01-List/list.go)
 
 ```go
 package main
@@ -96,7 +98,7 @@ func main() {
 
 ## Tuples
 
-[Code](./Chapter01/Tuples/tuples.go)
+[Code](./Chapter01/02-Tuples/tuples.go)
 
 ```go
 package main
@@ -137,7 +139,7 @@ func main() {
 
 ## Heap
 
-[Code](./Chapter01/Heap/heap.go)
+[Code](./Chapter01/03-Heap/heap.go)
 
 ```go
 package main
@@ -192,7 +194,7 @@ func main() {
 [Refactoring.guru](https://refactoring.guru/design-patterns/adapter) \
 [GolangByExample.com](https://golangbyexample.com/adapter-design-pattern-go/)
 
-[Code](./Chapter01/Adapter/adapter.go)
+[Code](./Chapter01/04-Adapter/adapter.go)
 
 ```go
 package main
@@ -236,7 +238,7 @@ func main() {
 [Refactoring.guru](https://refactoring.guru/design-patterns/bridge) \
 [GolangByExample.com](https://golangbyexample.com/bridge-design-pattern-in-go/)
 
-[Code](./Chapter01/Bridge/bridge.go)
+[Code](./Chapter01/05-Bridge/bridge.go)
 
 ```go
 package main
@@ -292,7 +294,7 @@ func main() {
 [Refactoring.guru](https://refactoring.guru/design-patterns/composite) \
 [GolangByExample.com](https://golangbyexample.com/composite-design-pattern-golang)
 
-[Code](./Chapter01/Composite/composite.go)
+[Code](./Chapter01/06-Composite/composite.go)
 
 ```go
 package main
@@ -363,7 +365,7 @@ func main() {
 [Refactoring.guru](https://refactoring.guru/design-patterns/decorator) \
 [GolangByExample.com](https://golangbyexample.com/decorator-pattern-golang/)
 
-[Code](./Chapter01/Decorator/decorator.go)
+[Code](./Chapter01/07-Decorator/decorator.go)
 
 ```go
 package main
@@ -414,7 +416,7 @@ func main() {
 [Refactoring.guru](https://refactoring.guru/design-patterns/facade) \
 [GolangByExample.com](https://golangbyexample.com/facade-design-pattern-in-golang/)
 
-[Code](./Chapter01/Facade/facade.go)
+[Code](./Chapter01/08-Facade/facade.go)
 
 ```go
 package main
@@ -511,7 +513,7 @@ func main() {
 [Refactoring.guru](https://refactoring.guru/design-patterns/flyweight) \
 [GolangByExample.com](https://golangbyexample.com/flyweight-design-pattern-golang/)
 
-[Code](./Chapter01/Flyweight/flyweight.go)
+[Code](./Chapter01/09-Flyweight/flyweight.go)
 
 ```go
 package main
@@ -609,7 +611,7 @@ func main() {
 
 ## Private Class
 
-[Code](./Chapter01/PrivateClass/private_class.go)
+[Code](./Chapter01/10-PrivateClass/private_class.go)
 
 ```go
 package main
@@ -661,7 +663,7 @@ func main() {
 [Refaactoring.guru](https://refactoring.guru/design-patterns/proxy) \
 [GolangByExample.com](https://golangbyexample.com/proxy-design-pattern-in-golang/)
 
-[Code](./Chapter01/Proxy/proxy.go)
+[Code](./Chapter01/11-Proxy/proxy.go)
 
 ```go
 package main
@@ -728,7 +730,7 @@ parameters
 
 ## Complexity
 
-[Code](./Chapter01/Complexity/complexity.go)
+[Code](./Chapter01/12-Complexity/complexity.go)
 
 ```go
 package main
@@ -758,7 +760,7 @@ Using Big O notation, the constant time *O(1)*, linear time *O(n)*, logarithmic 
 
 ## Linear complexity
 
-[Code](./Chapter01/LinearComplexity/linear_complexity.go)
+[Code](./Chapter01/13-LinearComplexity/linear_complexity.go)
 
 ```go
 package main
@@ -782,7 +784,7 @@ func main() {
 
 ## Quadratic complexit
 
-[Code](./Chapter01/QuadraticComplexity/quadratic_complexity.go)
+[Code](./Chapter01/14-QuadraticComplexity/quadratic_complexity.go)
 
 ```go
 package main
@@ -808,7 +810,7 @@ func main() {
 
 ## Cubic Complexity
 
-[Code](./Chapter01/CubicComplexity/cubic_complexity.go)
+[Code](./Chapter01/15-CubicComplexity/cubic_complexity.go)
 
 ```go
 package main
@@ -835,7 +837,7 @@ func main() {
 
 ## Logarithmic complexity
 
-[Code](./Chapter01/LogarithmicComplexity/logarithmic_complexity.go)
+[Code](./Chapter01/16-LogarithmicComplexity/logarithmic_complexity.go)
 
 ```go
 package main
@@ -896,7 +898,7 @@ func main() {
 
 ## Brute force algorithms
 
-[Code](./Chapter01/BruteForceAlgorithms/brute_force_algorithms.go)
+[Code](./Chapter01/17-BruteForceAlgorithms/brute_force_algorithms.go)
 
 ```go
 package main
@@ -928,7 +930,7 @@ func main() {
 
 ## Divede and Conquer Algorithms
 
-[Code](./Chapter01/DivedeAndConquerAlgorithms/divede_and_conquer_algorithms.go)
+[Code](./Chapter01/18-DivedeAndConquerAlgorithms/divede_and_conquer_algorithms.go)
 
 ```go
 package main
@@ -956,7 +958,7 @@ func main() {
 
 ## Backtracking algorithms
 
-[Code](./Chapter01/BacktrackingAlgorithms/backtracking_algorithms.go)
+[Code](./Chapter01/19-BacktrackingAlgorithms/backtracking_algorithms.go)
 
 ```go
 package main
@@ -1005,6 +1007,35 @@ structures, such as arrays, slices, two-dimensional slices, maps, structs, and c
 Variadic functions, deferred function calls, and panic and recover operations are
 introduced. Slicing operations, such as enlarging using append and copy, assigning parts,
 appending a slice, and appending part of a slice, are also presented in this chapter.
+
+## Arrays
+
+[Code](./Chapter02/01-Arrays/arrays.go)
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var arr = [5]int{1, 2, 3, 4, 5}
+
+	var i int
+	for i = 0; i < len(arr); i++ {
+		fmt.Println("printing elaments ", arr[i])
+	}
+
+	for i, value := range arr {
+		fmt.Println("range ", i, value)
+	}
+
+	for _, value := range arr {
+		fmt.Println("blank range", value)
+	}
+}
+```
+
+![Result of Arrays](./images/arrays.png)
 
 ## Contributing
 
