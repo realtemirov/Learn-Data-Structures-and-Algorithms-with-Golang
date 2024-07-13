@@ -32,7 +32,9 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
 
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
         * [Arrays](#arrays)
-		* [The Len function]
+		* [The Len function](#the-len-function)
+		* [Slice function](#slice-function)
+		* [Two dimensional slices](#two-dimensional-slices)
 
 ## Hello World !
 
@@ -1086,6 +1088,73 @@ func main() {
 ```
 
 ![Result of function](./images/slices.png)
+
+## Two dimensional slices
+
+[Code](./Chapter02/03-TwoDimensionalSlices/two_dimensional_array.go)
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var twoDArray [8][8]int
+	twoDArray[3][6] = 18
+	twoDArray[7][4] = 3
+	fmt.Println(twoDArray)
+}
+```
+
+![Result of function](./images/two_dimensional_array.png)
+
+[Code](./Chapter02/03-TwoDimensionalSlices/two_dimensional_slices.go)
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var (
+		rows int
+		cols int
+	)
+
+	rows = 7
+	cols = 9
+	var twoDSlices = make([][]int, rows)
+	var i int
+	for i = range twoDSlices {
+		twoDSlices[i] = make([]int, cols)
+	}
+	fmt.Println(twoDSlices)
+}
+```
+
+![Result of function](./images/two_dimensional_slices.png)
+
+[Code](./Chapter02/03-TwoDimensionalSlices/append_slice.go)
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var arr = []int{5, 6, 7, 8, 9}
+	var slice1 = arr[:3]
+	fmt.Println("slice1", slice1)
+	var slice2 = arr[1:5]
+	fmt.Println("slice2", slice2)
+	var slice3 = append(slice2, 12)
+	fmt.Println("slice3", slice3)
+}
+```
+
+![Result of function](./images/append_slice.png)
+
+
 
 ## Contributing
 
