@@ -194,6 +194,38 @@ func main() {
 
 [Code](./Chapter01/Adapter/adapter.go)
 
+```go
+package main
+
+import "fmt"
+
+type IProcess interface {
+	process()
+}
+
+type Adapter struct {
+	adaptee Adaptee
+}
+
+func (adapter Adapter) process() {
+	fmt.Println("Adapter process")
+	adapter.adaptee.convert()
+}
+
+type Adaptee struct {
+	adapterType int
+}
+
+func (adaptee Adaptee) convert() {
+	fmt.Println("Adaptee convert method")
+}
+
+func main() {
+	var processor IProcess = Adapter{}
+	processor.process()
+}
+```
+
 ![Adapter result](./images/adapter.png)
 
 ## Bridge
@@ -205,6 +237,50 @@ func main() {
 [GolangByExample.com](https://golangbyexample.com/bridge-design-pattern-in-go/)
 
 [Code](./Chapter01/Bridge/bridge.go)
+
+```go
+package main
+
+import "fmt"
+
+type IDrawShape interface {
+	drawShape(x [5]float32, y [5]float32)
+}
+
+type DrawShape struct{}
+
+func (drawShape DrawShape) drawShape(x [5]float32, y [5]float32) {
+	fmt.Println("Drawing Shape")
+}
+
+type IContour interface {
+	drawContour(x [5]float32, y [5]float32)
+	resizeByFactor(factor int)
+}
+
+type Contour struct {
+	x      [5]float32
+	y      [5]float32
+	shape  DrawShape
+	factor int
+}
+
+func (contour Contour) drawContour(x [5]float32, y [5]float32) {
+	fmt.Println("Drawing Contour")
+	contour.shape.drawShape(contour.x, contour.y)
+}
+func (contour Contour) resizeByFactor(factor int) {
+	contour.factor = factor
+}
+
+func main() {
+	var x = [5]float32{1, 2, 3, 4, 5}
+	var y = [5]float32{1, 2, 3, 4, 5}
+	var contour IContour = Contour{x: x, y: y}
+	contour.drawContour(x, y)
+	contour.resizeByFactor(2)
+}
+```
 
 ![Bridge result](./images/bridge.png)
 
@@ -218,6 +294,65 @@ func main() {
 
 [Code](./Chapter01/Composite/composite.go)
 
+```go
+package main
+
+import "fmt"
+
+type IComposite interface {
+	perform()
+}
+
+type Branch struct {
+	leafs    []Leaflet
+	name     string
+	branches []Branch
+}
+
+func (branch *Branch) perform() {
+	fmt.Println("Branch: " + branch.name)
+	for _, leaf := range branch.leafs {
+		leaf.perform()
+	}
+
+	for _, branch := range branch.branches {
+		branch.perform()
+	}
+}
+func (branch *Branch) addLeaf(leaf Leaflet) {
+	branch.leafs = append(branch.leafs, leaf)
+}
+func (branch *Branch) addBranch(newBranch Branch) {
+	branch.branches = append(branch.branches, newBranch)
+}
+
+func (branch *Branch) getLeaflets() []Leaflet {
+	return branch.leafs
+}
+
+type Leaflet struct {
+	name string
+}
+
+func (leaf *Leaflet) perform() {
+	fmt.Println("Leaflet: " + leaf.name)
+}
+
+func main() {
+	var branch = &Branch{name: "branch 1"}
+	var leaf1 = Leaflet{name: "leaf 1"}
+	var leaf2 = Leaflet{name: "leaf 2"}
+	var branch2 = Branch{name: "branch 2"}
+
+	branch.addLeaf(leaf1)
+	branch.addLeaf(leaf2)
+	branch.addBranch(branch2)
+
+	branch.perform()
+
+}
+```
+
 ![Composite result](./images/composite.png)
 
 ## Decorator
@@ -229,6 +364,45 @@ func main() {
 [GolangByExample.com](https://golangbyexample.com/decorator-pattern-golang/)
 
 [Code](./Chapter01/Decorator/decorator.go)
+
+```go
+package main
+
+import "fmt"
+
+type IProcess interface {
+	process()
+}
+
+type Process struct{}
+
+func (process Process) process() {
+	fmt.Println("Process process")
+}
+
+type ProcessDecorator struct {
+	processInstance *Process
+}
+
+func (decorator *ProcessDecorator) process() {
+	if decorator.processInstance == nil {
+		fmt.Println("ProcessDecorator process")
+	} else {
+		fmt.Printf("ProcessDecorator process and ")
+		decorator.processInstance.process()
+	}
+}
+
+func main() {
+	var process = &Process{}
+	var decorator = &ProcessDecorator{}
+
+	decorator.process()
+	decorator.processInstance = process
+	decorator.process()
+
+}
+```
 
 ![Decorator result](./images/decorator.png)
 
@@ -242,6 +416,91 @@ func main() {
 
 [Code](./Chapter01/Facade/facade.go)
 
+```go
+package main
+
+import "fmt"
+
+type Account struct {
+	id          string
+	accountType string
+}
+
+func (account *Account) create(accountType string) *Account {
+	fmt.Println("Account creation with type")
+	account.accountType = accountType
+	return account
+}
+
+func (account *Account) getById(id string) *Account {
+	fmt.Println("Getting account by id")
+	return account
+}
+
+func (account *Account) deleteById(id string) {
+	fmt.Println("Delete account by id")
+}
+
+type Customer struct {
+	id   string
+	name string
+}
+
+func (customer *Customer) create(name string) *Customer {
+	fmt.Println("Customer creation")
+	customer.name = name
+	return customer
+}
+
+type Transaction struct {
+	id            string
+	amount        float32
+	srcAccountId  string
+	destAccountId string
+}
+
+func (transaction *Transaction) create(srcAccountId, destAccountId string, amount float32) *Transaction {
+	fmt.Println("Transaction creation")
+	transaction.srcAccountId = srcAccountId
+	transaction.destAccountId = destAccountId
+	transaction.amount = amount
+	return transaction
+}
+
+type BranchManagerFacade struct {
+	account     *Account
+	customer    *Customer
+	transaction *Transaction
+}
+
+func NewBranchManagerFacade() *BranchManagerFacade {
+	return &BranchManagerFacade{&Account{}, &Customer{}, &Transaction{}}
+}
+
+func (facade *BranchManagerFacade) createCustomerAccount(customerName, accountType string) (*Customer, *Account) {
+	var customer = facade.customer.create(customerName)
+	var account = facade.account.create(accountType)
+	return customer, account
+}
+
+func (facade *BranchManagerFacade) createTransaction(srcAccountId, destAccountId string, amount float32) *Transaction {
+	var transaction = facade.transaction.create(srcAccountId, destAccountId, amount)
+	return transaction
+}
+
+func main() {
+	var facade = NewBranchManagerFacade()
+	var customer *Customer
+	var account *Account
+
+	customer, account = facade.createCustomerAccount("John Doe", "savings")
+	fmt.Println(customer.name)
+	fmt.Println(account.accountType)
+	var transaction = facade.createTransaction("1", "2", 100)
+	fmt.Println(transaction.amount)
+}
+```
+
 ![Facade result](./images/facade.png)
 
 ## Flyweight
@@ -254,11 +513,143 @@ func main() {
 
 [Code](./Chapter01/Flyweight/flyweight.go)
 
+```go
+package main
+
+import "fmt"
+
+type DataTransferObject interface {
+	getId() string
+}
+
+type Customer struct {
+	id   string
+	name string
+	ssn  string
+}
+
+func (customer Customer) getId() string {
+	return customer.id
+}
+
+type Employee struct {
+	id   string
+	name string
+}
+
+func (employee Employee) getId() string {
+	return employee.id
+}
+
+type Manager struct {
+	id   string
+	name string
+	dept string
+}
+
+func (manager Manager) getId() string {
+	return manager.id
+}
+
+type Address struct {
+	id          string
+	streetLine1 string
+	streetLine2 string
+	state       string
+	city        string
+}
+
+func (address Address) getId() string {
+	return address.id
+}
+
+type DataTransferObjectFactory struct {
+	pool map[string]DataTransferObject
+}
+
+func (factory DataTransferObjectFactory) getDataTransferObject(dtoType string) DataTransferObject {
+	var dto = factory.pool[dtoType]
+
+	if dto == nil {
+		fmt.Println("new DTO of dtoType: " + dtoType)
+
+		switch dtoType {
+		case "customer":
+			factory.pool[dtoType] = Customer{id: "1"}
+		case "employee":
+			factory.pool[dtoType] = Employee{id: "2"}
+		case "manager":
+			factory.pool[dtoType] = Manager{id: "3"}
+		case "address":
+			factory.pool[dtoType] = Address{id: "4"}
+		}
+		dto = factory.pool[dtoType]
+	}
+
+	return dto
+}
+
+func main() {
+	var factory = DataTransferObjectFactory{pool: make(map[string]DataTransferObject)}
+	var customer DataTransferObject = factory.getDataTransferObject("customer")
+	fmt.Println("Customer ", customer.getId())
+
+	var employee DataTransferObject = factory.getDataTransferObject("employee")
+	fmt.Println("Employee ", employee.getId())
+
+	var manager DataTransferObject = factory.getDataTransferObject("manager")
+	fmt.Println("Manager ", manager.getId())
+
+	var address DataTransferObject = factory.getDataTransferObject("address")
+	fmt.Println("Address ", address.getId())
+}
+```
+
 ![Flyweight result](./images/flyweight.png)
 
 ## Private Class
 
 [Code](./Chapter01/PrivateClass/private_class.go)
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type AccountDetails struct {
+	id          string
+	accountType string
+}
+
+type Account struct {
+	details      *AccountDetails
+	CustomerName string
+}
+
+func (account *Account) setDetails(id, accountType string) {
+	account.details = &AccountDetails{id, accountType}
+}
+
+func (account *Account) getId() string {
+	return account.details.id
+}
+
+func (account *Account) getAccountType() string {
+	return account.details.accountType
+}
+
+func main() {
+	var account *Account = &Account{CustomerName: "John Smith"}
+	account.setDetails("4532", "current")
+	jsonAccount, _ := json.Marshal(account)
+	fmt.Println("Private Class hidden:", string(jsonAccount))
+	fmt.Println("Account ID:", account.getId())
+	fmt.Println("Account Type:", account.getAccountType())
+}
+```
 
 ![Private Class result](./images/private_class.png)
 
@@ -271,6 +662,40 @@ func main() {
 [GolangByExample.com](https://golangbyexample.com/proxy-design-pattern-in-golang/)
 
 [Code](./Chapter01/Proxy/proxy.go)
+
+```go
+package main
+
+import "fmt"
+
+type RealObject struct {
+}
+
+type IRealObject interface {
+	performActin()
+}
+
+func (realObject *RealObject) performAction() {
+	fmt.Println("RealObject performAction()")
+}
+
+type VirtualProxy struct {
+	realObject *RealObject
+}
+
+func (virtualProxy *VirtualProxy) performAction() {
+	if virtualProxy.realObject == nil {
+		virtualProxy.realObject = &RealObject{}
+	}
+	fmt.Println("VirtualProxy performAction()")
+	virtualProxy.realObject.performAction()
+}
+
+func main() {
+	var object VirtualProxy = VirtualProxy{}
+	object.performAction()
+}
+```
 
 ![Proxy result](./images/proxy.png)
 

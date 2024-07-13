@@ -32,18 +32,6 @@ func (contour Contour) resizeByFactor(factor int) {
 	contour.factor = factor
 }
 
-// type ellipse struct {
-// 	a, b, r int
-// }
-
-// func (e ellipse) drawShape() {
-
-// }
-
-// func (e ellipse) drawContour() {
-
-// }
-
 func main() {
 	var x = [5]float32{1, 2, 3, 4, 5}
 	var y = [5]float32{1, 2, 3, 4, 5}
