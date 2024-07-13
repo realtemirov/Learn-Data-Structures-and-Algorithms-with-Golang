@@ -501,6 +501,33 @@ func main() {
 
 ![Result of Brute force algorihtm](./images/brute_force_algorithms.png)
 
+## Divede and Conquer Algorithms
+
+[Code](./Chapter01/DivedeAndConquerAlgorithms/divede_and_conquer_algorithms.go)
+
+```go
+package main
+
+import "fmt"
+
+func fibonacci(k int) int {
+	if k <= 1 {
+		return 1
+	}
+
+	return fibonacci(k-1) + fibonacci(k-2)
+}
+
+func main() {
+	var i int = 5
+	for i = 0; i < 8; i++ {
+		var fib = fibonacci(i)
+		fmt.Println(fib)
+	}
+}
+```
+
+![Result of Divede and Conquer Algorithms](./images/divede_and_conquer_algorithms.png)
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
 
