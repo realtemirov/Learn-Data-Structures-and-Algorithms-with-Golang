@@ -26,6 +26,7 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
         * [Quadratic Complexity](#quadratic-complexity)
 		* [Cubic Complexity](#cubic-complexity)
 		* [Logarithmic Complexity](#logarithmic-complexity)
+        * [Brute force algorithm](#brute-force-algorithms)
 
     2. [Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements](#chapter-2-getting-started-with-go-for-data-structures-and-algorithms-technical-requirements)
 
@@ -467,6 +468,38 @@ func main() {
 ```
 
 ![Result of Logarithmic Complexity](./images/logarithmic_complexity.png)
+
+## Brute force algorithms
+
+[Code](./Chapter01/BruteForceAlgorithms/brute_force_algorithms.go)
+
+```go
+package main
+
+import "fmt"
+
+func findElement(arr [10]int, k int) bool {
+	var i int
+	for i = 0; i < 10; i++ {
+		if arr[i] == k {
+			return true
+		}
+	}
+
+	return false
+}
+
+func main() {
+	var arr = [10]int{1, 4, 7, 8, 3, 9, 2, 4, 1, 9}
+	var check bool = findElement(arr, 10)
+	fmt.Println(check)
+
+	var check2 bool = findElement(arr, 9)
+	fmt.Println(check2)
+}
+```
+
+![Result of Brute force algorihtm](./images/brute_force_algorithms.png)
 
 
 ## Chapter 2: Getting Started with Go for Data Structures and Algorithms Technical requirements
