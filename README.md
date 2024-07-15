@@ -36,6 +36,27 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
 		* [Slice function](#slice-function)
 		* [Two dimensional slices](#two-dimensional-slices)
 		* [Maps](#maps)
+		* [Database operations](#databasa-operations)
+		  * [GetCustomer](#the-getcustomer-function)
+		  * [InsertCustomer](#the-insertcustomer-function)
+		  * [UpdateCustomer](#the-updatecustomer-function)
+		  * [DeleteCustomer](#the-deletecustomer-function)
+		* [CRUD web forms](#crud-web-forms)
+		  * [HTML Template](#html-template)
+		  * [Create function](#create-function)
+		  * [Insert function](#insert-function)
+		  * [Alter function](#alter-function)
+		  * [Update function](#update-function)
+		  * [Delete function](#delete-function)
+		  * [View function](#view-function)
+		  * [The main function](#the-main-function)
+		  * [Header template](#header-template)
+		  * [Home template](#home-template)
+		  * [Footer template](#footer-template)
+		  * [Menu template](#menu-template)
+		  * [Create template](#create-template)
+		  * [Update template](#update-template)
+		  * [View template](#view-template)
 
 ## Hello World !
 
@@ -1244,6 +1265,48 @@ func GetCustomers() []Customer {
 
 ![Result of function](./images/get_customer.png)
 
+### The GetCustomerById function
+
+```go
+func GetCustomerById(customerId int) Customer {
+	var (
+		database *sql.DB = GetConnection()
+		err      error
+		rows     *sql.Rows
+	)
+
+	rows, err = database.Query("SELECT * FROM customers WHERE CustomerId = ?", customerId)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	var customer Customer = Customer{}
+
+	for rows.Next() {
+		var (
+			customerId   int
+			customerName string
+			ssn          string
+		)
+
+		err = rows.Scan(
+			&customerId,
+			&customerName,
+			&ssn,
+		)
+		if err != nil {
+			panic(err.Error())
+		}
+		customer.CustomerId = customerId
+		customer.CustomerName = customerName
+		customer.SSN = ssn
+	}
+
+	defer database.Close()
+	return customer
+}
+```
+
 ### The InsertCustomer function
 
 ```go
@@ -1312,6 +1375,336 @@ func DeleteCustomer(csutomer Customer) {
 ```
 
 ![Result of function](./images/delete_customer.png)
+
+## CRUD web forms
+
+### HTML Template
+
+[Code](./Chapter02/06-WebForms/web_forms.go)
+[HTML Form](./Chapter02/06-WebForms/main.html)
+
+```go
+package main
+
+import (
+	"html/template"
+	"log"
+	"net/http"
+)
+
+func Home(writer http.ResponseWriter, reader *http.Request) {
+	var template_html *template.Template = template.Must(template.ParseFiles("./Chapter02/06-WebForms/main.html"))
+	template_html.Execute(writer, nil)
+}
+
+func main() {
+	log.Println("Server started on: http://localhost:8000")
+	http.HandleFunc("/", Home)
+	http.ListenAndServe(":8000", nil)
+}
+```
+
+```html
+<html>
+    <body>
+        <p>Welcome to Web Forms</p>
+    </body>
+</html>
+```
+
+![Result of function](./images/web_form.png)
+
+![Result of browser](./images/web_form_browser.png)
+
+### Create function
+
+```go
+func Create(writer http.ResponseWriter, request *http.Request) {
+	template_html.ExecuteTemplate(writer, "Create", nil)
+}
+```
+
+### Insert function
+
+```go
+func Insert(writer http.ResponseWriter, request *http.Request) {
+	var (
+		customer  Customer
+		customers []Customer
+	)
+
+	customer.CustomerName = request.FormValue("customername")
+	customer.SSN = request.FormValue("ssn")
+
+	InsertCustomer(customer)
+
+	customers = GetCustomers()
+
+	template_html.ExecuteTemplate(writer, "Home", customers)
+}
+```
+
+### Alter function
+
+```go
+func Alter(writer http.ResponseWriter, request *http.Request) {
+	var (
+		customer      Customer
+		customerId    int
+		customerIdStr string
+		customers     []Customer
+	)
+
+	customerIdStr = request.FormValue("id")
+
+	fmt.Sscanf(customerIdStr, "%d", customerId)
+
+	customer.CustomerId = customerId
+	customer.CustomerName = request.FormValue("customername")
+	customer.SSN = request.FormValue("ssn")
+
+	UpdateCustomer(customer)
+
+	customers = GetCustomers()
+	template_html.ExecuteTemplate(writer, "Home", customers)
+}
+```
+
+### Update function
+
+```go
+func Update(writer http.ResponseWriter, request *http.Request) {
+	var (
+		customerId    int
+		customerIdStr string
+		customer      Customer
+	)
+
+	customerIdStr = request.FormValue("id")
+
+	fmt.Sscanf(customerIdStr, "%d", &customerId)
+	customer = GetCustomerById(customerId)
+
+	template_html.ExecuteTemplate(writer, "Update", customer)
+}
+```
+
+### Delete function
+
+```go
+func Delete(writer http.ResponseWriter, request *http.Request) {
+	var (
+		customerId    int
+		customerIdStr string
+		customer      Customer
+		customers     []Customer
+	)
+
+	customerIdStr = request.FormValue("id")
+	fmt.Sscanf(customerIdStr, "%d", &customerId)
+
+	customer = GetCustomerById(customerId)
+	DeleteCustomer(customer)
+
+	customers = GetCustomers()
+
+	template_html.ExecuteTemplate(writer, "Home", customers)
+}
+```
+
+### View function
+
+```go
+func View(writer http.ResponseWriter, request *http.Request) {
+	var (
+		customerId    int
+		customerIdStr string
+		customer      Customer
+		customers     []Customer
+	)
+
+	customerIdStr = request.FormValue("id")
+
+	fmt.Sscanf(customerIdStr, "%d", &customerId)
+	customer = GetCustomerById(customerId)
+	fmt.Println(customer)
+
+	customers = GetCustomers()
+	customers = append(customers, customer)
+
+	template_html.ExecuteTemplate(writer, "View", customers)
+}
+```
+
+### The main function
+
+```go
+func main() {
+	log.Println("Server started on: http://localhost:8000")
+
+	http.HandleFunc("/", Home)
+	http.HandleFunc("/alter", Alter)
+	http.HandleFunc("/create", Create)
+	http.HandleFunc("/update", Update)
+	http.HandleFunc("/view", View)
+	http.HandleFunc("/insert", Insert)
+	http.HandleFunc("/delete", Delete)
+
+	http.ListenAndServe(":8000", nil)
+}
+```
+
+### Header template
+
+```html
+{{ define "Header" }}
+<!DOCTYPLE html>
+<html>
+    <head>
+        <title>CRM</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <h1>Customer Management - CRM</h1>
+{{ end }}
+```
+
+### Home template
+
+```html
+{{ define "Home" }}
+    {{ template "Header"}}
+    {{ template "Menu"}}
+        <h2>Customers</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>CustomerId</td>
+                    <td>CustomerName</td>
+                    <td>SSN</td>
+                    <td>Update</td>
+                    <td>Delete</td>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range . }}
+                    <tr>
+                        <td>{{ .CustomerId }}</td>
+                        <td>{{ .CustomerName }}</td>
+                        <td>{{ .SSN }}</td>
+                        <td><a href="/view?id={{ .CustomerId }}">View</a></td>
+                        <td><a href="/update?id={{ .CustomerId }}">Update</a></td>
+                        <td><a href="/delete?id={{ .CustomerId }}">Delete</a></td>
+                    </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    {{ template "Footer"}}
+{{ end }}
+```
+
+### Footer template
+
+```html
+{{ define "Footer" }}
+<!DICTYPLE html>
+    </body>
+</html>
+{{ end }}
+```
+
+### Menu template
+
+```html
+{{ define "Menu" }}
+    <a href="/">Home</a> | <a href="/create">Create Customer</a>
+{{ end }}
+```
+
+### Create template
+
+```html
+{{ define "Create" }}
+    {{ template "Header"}}
+    {{ template "Menu"}}
+        <br>
+            <h1>Create Customer</h1>
+        <br>
+        <br>
+        <form method="POST" action="/insert">
+            Customer Name: 
+            <input type="text" name="customername" placeholder="Customer name" autofocus/>
+            <br>
+            <br>
+            SSN:
+            <input type="text" name="ssn" placeholder="ssn"/>
+            <br>
+            <br>
+            <input type="submit" value="Create Customer" />
+        </form>
+    {{ template "Footer"}}
+{{ end }}
+```
+
+### Update template
+
+```html
+{{ define "Update" }}
+    {{ template "Header"}}
+    {{ template "Menu"}}
+        <br>
+            <h1>Update Customer</h1>
+        <br>
+        <br>
+        <form method="POST" action="/alter">
+            <input type="hidden" name="id" value="{{ .CustomerId }}" />
+            Customer Name: 
+            <input type="text" name="customername" placeholder="Customer name" value="{{ .CustomerName }}" autofocus/>
+            <br>
+            <br>
+            SSN:
+            <input type="text" name="ssn" placeholder="ssn" value="{{ .SSN }}"/>
+            <br>
+            <br>
+            <input type="submit" value="Update Customer" />
+        </form>
+    {{ template "Footer"}}
+{{ end }}
+```
+
+### View template
+
+```html
+{{ define "View" }}
+    {{ template "Header"}}
+    {{ template "Menu"}}
+        <br>
+            <h1>View Customer</h1>
+        <br>
+        <br>
+        <table border="1">
+            <tr>
+                <td>CustomerId</td>
+                <td>CustomerName</td>
+                <td>SSN</td>
+                <td>Update</td>
+                <td>Delete</td>
+            </tr>
+            {{ if . }}
+                {{ range . }}
+                    <tr>
+                        <td>{{ .CustomerId }}</td>
+                        <td>{{ .CustomerName }}</td>
+                        <td>{{ .SSN }}</td>
+                        <td><a href="/update?id={{ .CustomerId }}">Update</a></td>
+                        <td><a href="/delete?id={{ .CustomerId }}">Delete</a></td>
+                    </tr>
+                {{ end }}
+            {{ end }}
+        </table>
+    {{ template "Footer"}}
+{{ end }}
+```
 
 ## Contributing
 

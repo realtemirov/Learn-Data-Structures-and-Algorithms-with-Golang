@@ -1,0 +1,29 @@
+{{ define "Home" }}
+    {{ template "Header"}}
+    {{ template "Menu"}}
+        <h2>Customers</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>CustomerId</td>
+                    <td>CustomerName</td>
+                    <td>SSN</td>
+                    <td>Update</td>
+                    <td>Delete</td>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range . }}
+                    <tr>
+                        <td>{{ .CustomerId }}</td>
+                        <td>{{ .CustomerName }}</td>
+                        <td>{{ .SSN }}</td>
+                        <td><a href="/view?id={{ .CustomerId }}">View</a></td>
+                        <td><a href="/update?id={{ .CustomerId }}">Update</a></td>
+                        <td><a href="/delete?id={{ .CustomerId }}">Delete</a></td>
+                    </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    {{ template "Footer"}}
+{{ end }}

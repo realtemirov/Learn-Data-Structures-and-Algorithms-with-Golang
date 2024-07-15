@@ -3,9 +3,14 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"log"
+	"net/http"
+	"text/template"
 
 	_ "github.com/go-sql-driver/mysql"
 )
+
+var template_html = template.Must(template.ParseGlob("./Chapter02/06-WebForms/templates/*"))
 
 type Customer struct {
 	CustomerId   int
@@ -159,12 +164,120 @@ func DeleteCustomer(csutomer Customer) {
 
 	defer database.Close()
 }
-func main() {
-	var customers []Customer = GetCustomers()
-	fmt.Println("Before Delete", customers)
-	var customer Customer
-	customer.CustomerId = 1
-	DeleteCustomer(customer)
+
+func Home(writer http.ResponseWriter, request *http.Request) {
+	var customers []Customer
 	customers = GetCustomers()
-	fmt.Println("After Delete", customers)
+	log.Println(customers)
+	template_html.ExecuteTemplate(writer, "Home", customers)
+
+}
+
+func Create(writer http.ResponseWriter, request *http.Request) {
+	template_html.ExecuteTemplate(writer, "Create", nil)
+}
+
+func Insert(writer http.ResponseWriter, request *http.Request) {
+	var (
+		customer  Customer
+		customers []Customer
+	)
+
+	customer.CustomerName = request.FormValue("customername")
+	customer.SSN = request.FormValue("ssn")
+
+	InsertCustomer(customer)
+
+	customers = GetCustomers()
+
+	template_html.ExecuteTemplate(writer, "Home", customers)
+}
+
+func Alter(writer http.ResponseWriter, request *http.Request) {
+	var (
+		customer      Customer
+		customerId    int
+		customerIdStr string
+		customers     []Customer
+	)
+
+	customerIdStr = request.FormValue("id")
+
+	fmt.Sscanf(customerIdStr, "%d", customerId)
+
+	customer.CustomerId = customerId
+	customer.CustomerName = request.FormValue("customername")
+	customer.SSN = request.FormValue("ssn")
+
+	UpdateCustomer(customer)
+
+	customers = GetCustomers()
+	template_html.ExecuteTemplate(writer, "Home", customers)
+}
+
+func Update(writer http.ResponseWriter, request *http.Request) {
+	var (
+		customerId    int
+		customerIdStr string
+		customer      Customer
+	)
+
+	customerIdStr = request.FormValue("id")
+
+	fmt.Sscanf(customerIdStr, "%d", &customerId)
+	customer = GetCustomerById(customerId)
+
+	template_html.ExecuteTemplate(writer, "Update", customer)
+}
+
+func Delete(writer http.ResponseWriter, request *http.Request) {
+	var (
+		customerId    int
+		customerIdStr string
+		customer      Customer
+		customers     []Customer
+	)
+
+	customerIdStr = request.FormValue("id")
+	fmt.Sscanf(customerIdStr, "%d", &customerId)
+
+	customer = GetCustomerById(customerId)
+	DeleteCustomer(customer)
+
+	customers = GetCustomers()
+
+	template_html.ExecuteTemplate(writer, "Home", customers)
+}
+
+func View(writer http.ResponseWriter, request *http.Request) {
+	var (
+		customerId    int
+		customerIdStr string
+		customer      Customer
+		customers     []Customer
+	)
+
+	customerIdStr = request.FormValue("id")
+
+	fmt.Sscanf(customerIdStr, "%d", &customerId)
+	customer = GetCustomerById(customerId)
+
+	customers = GetCustomers()
+	customers = append(customers, customer)
+
+	template_html.ExecuteTemplate(writer, "View", customers)
+}
+
+func main() {
+	log.Println("Server started on: http://localhost:8000")
+
+	http.HandleFunc("/", Home)
+	http.HandleFunc("/alter", Alter)
+	http.HandleFunc("/create", Create)
+	http.HandleFunc("/update", Update)
+	http.HandleFunc("/view", View)
+	http.HandleFunc("/insert", Insert)
+	http.HandleFunc("/delete", Delete)
+
+	http.ListenAndServe(":8000", nil)
 }
