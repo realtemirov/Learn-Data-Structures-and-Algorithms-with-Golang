@@ -1192,6 +1192,127 @@ func main() {
 
 ![Result of Maps](./images/maps.png)
 
+## Databasa operations
+
+[Code](./Chapter02/05-DatabaseOperations/database_operations.go)
+
+### The GetCustomer function
+
+```go
+func GetCustomers() []Customer {
+	var database *sql.DB = GetConnection()
+
+	var (
+		err  error
+		rows *sql.Rows
+	)
+
+	rows, err = database.Query("SELECT * FROM customers ORDER BY CustomerId DESC")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	var (
+		customer  = Customer{}
+		customers = []Customer{}
+	)
+
+	for rows.Next() {
+		var (
+			customerId   int
+			customerName string
+			ssn          string
+		)
+		err = rows.Scan(
+			&customerId,
+			&customerName,
+			&ssn,
+		)
+		if err != nil {
+			panic(err.Error())
+		}
+		customer.CustomerId = customerId
+		customer.CustomerName = customerName
+		customer.SSN = ssn
+		customers = append(customers, customer)
+	}
+	defer database.Close()
+
+	return customers
+}
+```
+
+![Result of function](./images/get_customer.png)
+
+### The InsertCustomer function
+
+```go
+func InsertCustomer(customer Customer) {
+	var (
+		database *sql.DB = GetConnection()
+		err      error
+		insert   *sql.Stmt
+	)
+
+	insert, err = database.Prepare("INSERT INTO customers (CustomerName, SSN) VALUES (?, ?)")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	insert.Exec(customer.CustomerName, customer.SSN)
+	
+	defer database.Close()
+}	
+```
+
+![Result of function](./images/insert_customer.png)
+
+### The UpdateCustomer function
+
+```go
+func UpdateCustomer(customer Customer) {
+	var (
+		database *sql.DB = GetConnection()
+		err      error
+		update   *sql.Stmt
+	)
+
+	update, err = database.Prepare("UPDATE customers SET CustomerName = ?, SSN = ? WHERE CustomerId = ?")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	update.Exec(customer.CustomerName, customer.SSN, customer.CustomerId)
+
+	defer database.Close()
+}
+```
+
+![Result of function](./images/update_customer.png)
+
+### The DeleteCustomer function
+
+```go
+func DeleteCustomer(csutomer Customer) {
+	var (
+		database *sql.DB = GetConnection()
+		err      error
+		delete   *sql.Stmt
+	)
+
+	delete, err = database.Prepare("DELETE FROM customers WHERE CustomerId = ?")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	delete.Exec(csutomer.CustomerId)
+
+	defer database.Close()
+}
+```
+
+![Result of function](./images/delete_customer.png)
+
 ## Contributing
 
 Contributions are welcome! If you have a solution to an exercise that is different from the one provided, feel free to open a pull request.
