@@ -1378,9 +1378,10 @@ func DeleteCustomer(csutomer Customer) {
 
 ## CRUD web forms
 
+[Code](./Chapter02/06-WebForms/web_forms.go)
+
 ### HTML Template
 
-[Code](./Chapter02/06-WebForms/web_forms.go)
 [HTML Form](./Chapter02/06-WebForms/main.html)
 
 ```go
@@ -1705,6 +1706,8 @@ func main() {
     {{ template "Footer"}}
 {{ end }}
 ```
+
+![Result of function](./images/crm.png)
 
 ## Contributing
 
