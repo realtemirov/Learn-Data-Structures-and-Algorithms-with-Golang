@@ -57,6 +57,12 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
 		  * [Create template](#create-template)
 		  * [Update template](#update-template)
 		  * [View template](#view-template)
+2. [Section 2: Basic Data Structures and Algorithms using Go](#section-2-basic-data-structures-and-algorithms-using-go)
+    3. [Chapter 3: Linear Data Structures](#chapter-3-linear-data-structures)
+		* [Lists](#lists)
+			* [Linked list](#linked-list)
+			* [Doubly linked list](#doubly-linked-list)
+
 
 ## Hello World !
 
@@ -77,7 +83,7 @@ func main() {
 
 ![Hello World](./images/hello_world.png)
 
-## Section 1: Introduction to Data Structures and Algorithms and the Go Language
+# Section 1: Introduction to Data Structures and Algorithms and the Go Language
 
 We will be introducing the abstract data types, definition, and classification of data
 structures. Readers will be well-versed with performance analysis of algorithms and
@@ -1708,6 +1714,257 @@ func main() {
 ```
 
 ![Result of function](./images/crm.png)
+
+# Section 2: Basic Data Structures and Algorithms using Go
+
+We will talk about data structures, including linear, non-linear, homogeneous,
+heterogeneous, and dynamic types, as well as classic algorithms. This section covers
+different types of lists, trees, arrays, sets, dictionaries, tuples, heaps, queues, and stacks,
+along with sorting, recursion, searching, and hashing algorithms.
+
+## Chapter 3: Linear Data Structures
+
+Linear Data Structures, covers linear data structures such as lists, sets, tuples,
+stacks, and heaps. The operations related to these types, including insertion, deletion,
+updating, reversing, and merging are shown with various code samples. In this chapter, we
+present the complexity analysis of various data structure operations that display accessing,
+search, insertion, and deletion times.
+
+## Lists
+
+### Linked list
+
+[Code](./Chapter03/01-LinkedLists/linked_list.go)
+
+```go
+package main
+
+import "fmt"
+
+type Node struct {
+	property int
+	nextNode *Node
+}
+
+type LinkedList struct {
+	headNode *Node
+}
+
+func (linkedList *LinkedList) AddToHead(property int) {
+	var node = &Node{}
+	node.property = property
+	node.nextNode = nil
+
+	if linkedList.headNode != nil {
+		node.nextNode = linkedList.headNode
+	}
+
+	linkedList.headNode = node
+}
+
+func (linkedList *LinkedList) IterateList() {
+	for node := linkedList.headNode; node != nil; node = node.nextNode {
+		fmt.Println(node.property)
+	}
+}
+
+func (linkedList *LinkedList) LastNode() *Node {
+	var lastNode *Node
+
+	for node := linkedList.headNode; node != nil; node = node.nextNode {
+		if node.nextNode == nil {
+			lastNode = node
+		}
+	}
+
+	return lastNode
+}
+
+func (linkedList *LinkedList) AddToEnd(property int) {
+	var node *Node = &Node{}
+	node.property = property
+	node.nextNode = nil
+
+	var lastNode *Node = linkedList.LastNode()
+	if lastNode != nil {
+		lastNode.nextNode = node
+	}
+}
+
+func (linkedList *LinkedList) NodeWithValue(property int) *Node {
+	var (
+		nodeWith *Node
+	)
+
+	for node := linkedList.headNode; node != nil; node = node.nextNode {
+		if node.property == property {
+			nodeWith = node
+			break
+		}
+	}
+
+	return nodeWith
+}
+
+func (linkedList *LinkedList) AddAfter(nodeProperty, property int) {
+	var (
+		node     = &Node{}
+		nodeWith *Node
+	)
+	node.property = property
+	node.nextNode = nil
+	nodeWith = linkedList.NodeWithValue(nodeProperty)
+
+	if nodeWith != nil {
+		node.nextNode = nodeWith.nextNode
+		nodeWith.nextNode = node
+	}
+}
+
+func main() {
+	var linkedList LinkedList = LinkedList{}
+	linkedList.AddToHead(1)
+	linkedList.AddToHead(3)
+	linkedList.AddToEnd(5)
+	linkedList.AddAfter(1, 7)
+	linkedList.IterateList()
+}
+```
+
+![Result of linked list](./images/linked_list.png)
+
+
+### Doubly linked list
+
+[Code](./Chapter03/02-DoublyLinkedList/doubly_linked_list.go)
+
+```go
+package main
+
+import "fmt"
+
+type Node struct {
+	property     int
+	nextNode     *Node
+	previousNode *Node
+}
+
+type LinkedList struct {
+	headNode *Node
+}
+
+func (linkedList *LinkedList) NodeBetweenValues(firstProperty int, secondProperty int) *Node {
+	var (
+		nodeWith *Node
+	)
+
+	for node := linkedList.headNode; node != nil; node = node.nextNode {
+		if node.previousNode != nil && node.nextNode != nil {
+			if node.previousNode.property == firstProperty &&
+				node.nextNode.property == secondProperty {
+				nodeWith = node
+				break
+			}
+		}
+	}
+
+	return nodeWith
+}
+
+func (linkedList *LinkedList) AddToHead(property int) {
+	var (
+		node = &Node{}
+	)
+	node.property = property
+	node.nextNode = nil
+
+	if linkedList.headNode != nil {
+		node.nextNode = linkedList.headNode
+		linkedList.headNode.previousNode = node
+	}
+	linkedList.headNode = node
+}
+
+func (linkedList *LinkedList) NodeWithValue(property int) *Node {
+	var (
+		nodeWith *Node
+	)
+
+	for node := linkedList.headNode; node != nil; node = node.nextNode {
+		if node.property == property {
+			nodeWith = node
+			break
+		}
+	}
+
+	return nodeWith
+}
+
+func (linkedList *LinkedList) AddAfter(nodeProperty, property int) {
+	var (
+		node     *Node = &Node{}
+		nodeWith *Node
+	)
+	node.property = property
+	node.nextNode = nil
+
+	nodeWith = linkedList.NodeWithValue(nodeProperty)
+
+	if nodeWith != nil {
+		node.nextNode = nodeWith.nextNode
+		node.previousNode = nodeWith
+
+		nodeWith.nextNode = node
+	}
+}
+
+func (linkedList *LinkedList) LastNode() *Node {
+	var (
+		lastNode *Node
+	)
+
+	for node := linkedList.headNode; node != nil; node = node.nextNode {
+		if node.nextNode == nil {
+			lastNode = node
+			break
+		}
+	}
+
+	return lastNode
+}
+
+func (linkedList *LinkedList) AddToEnd(property int) {
+	var (
+		node     *Node = &Node{}
+		lastNode *Node
+	)
+	node.property = property
+	node.nextNode = nil
+
+	lastNode = linkedList.LastNode()
+	if lastNode != nil {
+		lastNode.nextNode = node
+		node.previousNode = lastNode
+	}
+}
+
+func main() {
+	var linkedList LinkedList = LinkedList{}
+
+	linkedList.AddToHead(1)
+	linkedList.AddToHead(3)
+	linkedList.AddToEnd(5)
+	linkedList.AddAfter(1, 7)
+	fmt.Println(linkedList.headNode.property)
+
+	var node *Node = linkedList.NodeBetweenValues(1, 5)
+	fmt.Println(node.property)
+}
+```
+
+![Result of doubly linked list](./images/doubly_linked_list.png)
+
+
 
 ## Contributing
 
