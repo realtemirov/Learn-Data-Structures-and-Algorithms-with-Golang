@@ -58,11 +58,13 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
 		  * [Update template](#update-template)
 		  * [View template](#view-template)
 2. [Section 2: Basic Data Structures and Algorithms using Go](#section-2-basic-data-structures-and-algorithms-using-go)
-    3. [Chapter 3: Linear Data Structures](#chapter-3-linear-data-structures)
+	
+	3. [Chapter 3: Linear Data Structures](#chapter-3-linear-data-structures)
 		* [Lists](#lists)
 			* [Linked list](#linked-list)
 			* [Doubly linked list](#doubly-linked-list)
 		* [Sets](#sets)
+		* [Tuples](#tuples-1)
 
 
 ## Hello World !
@@ -2064,6 +2066,31 @@ func main() {
 
 ![Result of set](./images/set_2.png)
 
+## Tuples
+
+[Code](./Chapter03/04-Tuples/tuples.go)
+
+```go
+package main
+
+import "fmt"
+
+func h(x int, y int) int {
+	return x * y
+}
+
+func g(l int, m int) (x int, y int) {
+	x = 2 * l
+	y = 4 * m
+	return
+}
+
+func main() {
+	fmt.Println(h(g(1, 2)))
+}
+```
+
+![Result of set](./images/tuples_2.png)
 
 ## Contributing
 
