@@ -65,6 +65,9 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
 			* [Doubly linked list](#doubly-linked-list)
 		* [Sets](#sets)
 		* [Tuples](#tuples-1)
+		* [Queues](#queues)
+			* [Simple Queues](#simple-queue)
+			* [Synchronized Queues](#synchronized-queue)
 
 
 ## Hello World !
@@ -2091,6 +2094,213 @@ func main() {
 ```
 
 ![Result of set](./images/tuples_2.png)
+
+## Queues
+
+### Simple queue
+[Code](./Chapter03/05-Queues/queue.go)
+
+```go
+package main
+
+import "fmt"
+
+type Queue []*Order
+
+type Order struct {
+	priority     int
+	quantity     int
+	product      string
+	customerName string
+}
+
+func (o *Order) New(priority int, quantity int, product string, customerName string) {
+	o.priority = priority
+	o.quantity = quantity
+	o.product = product
+	o.customerName = customerName
+}
+
+func (queue *Queue) Add(order *Order) {
+	if len(*queue) == 0 {
+		*queue = append(*queue, order)
+	} else {
+		var (
+			appended bool = false
+		)
+
+		for i, addedOrder := range *queue {
+			if order.priority > addedOrder.priority {
+				*queue = append((*queue)[:i], append(Queue{order}, (*queue)[i:]...)...)
+				appended = true
+				break
+			}
+		}
+
+		if !appended {
+			*queue = append(*queue, order)
+		}
+	}
+}
+
+func main() {
+	var (
+		queue         Queue  = make(Queue, 0)
+		order1        *Order = &Order{}
+		priority1     int    = 2
+		quantity1     int    = 20
+		product1      string = "Computer"
+		custoemrName1 string = "Greg White"
+	)
+
+	order1.New(priority1, quantity1, product1, custoemrName1)
+
+	var (
+		order2        *Order = &Order{}
+		priority2     int    = 1
+		quantity2     int    = 10
+		product2      string = "Monitor"
+		custoemrName2 string = "John Smith"
+	)
+	order2.New(priority2, quantity2, product2, custoemrName2)
+
+	queue.Add(order1)
+	queue.Add(order2)
+
+	for i := 0; i < len(queue); i++ {
+		fmt.Println(queue[i])
+	}
+}
+```
+
+![Result of set](./images/queue_1.png)
+
+### Synchronized queue
+[Code](./Chapter03/05-Queues/synchronized_queue.go)
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+
+	"math/rand"
+)
+
+const (
+	messagePassStart = iota
+	messageTicketStart
+	messagePassEnd
+	messageTicketEnd
+)
+
+type Queue struct {
+	waitPass    int
+	waitTicket  int
+	playPass    bool
+	playTicket  bool
+	queuePass   chan int
+	queueTicket chan int
+	message     chan int
+}
+
+func (queue *Queue) New() {
+	queue.message = make(chan int)
+	queue.queuePass = make(chan int)
+	queue.queueTicket = make(chan int)
+
+	go func() {
+		var (
+			message int
+		)
+		for {
+			select {
+			case message = <-queue.message:
+				switch message {
+				case messagePassStart:
+					queue.waitPass++
+				case messagePassEnd:
+					queue.playPass = false
+				case messageTicketStart:
+					queue.waitTicket++
+				case messageTicketEnd:
+					queue.playTicket = false
+				}
+
+				if queue.waitPass > 0 && queue.waitTicket > 0 &&
+					!queue.playPass && !queue.playTicket {
+					queue.playPass = true
+					queue.playTicket = true
+					queue.waitPass--
+					queue.waitTicket--
+					queue.queuePass <- 1
+					queue.queueTicket <- 1
+				}
+			}
+		}
+	}()
+}
+
+func (queue *Queue) StartTicketIssue() {
+	queue.message <- messageTicketStart
+	<-queue.queueTicket
+}
+
+func (queue *Queue) EndTicketIssue() {
+	queue.message <- messageTicketEnd
+}
+
+func ticketIssue(queue *Queue) {
+	for {
+		time.Sleep(time.Duration(rand.Intn(10000)) * time.Millisecond)
+		queue.StartTicketIssue()
+		fmt.Println("Ticket Issue starts")
+
+		time.Sleep(time.Duration(rand.Intn(2000)) * time.Millisecond)
+		fmt.Println("Ticket Issue ends")
+		queue.EndTicketIssue()
+	}
+}
+
+func (queue *Queue) StartPass() {
+	queue.message <- messagePassStart
+	<-queue.queuePass
+}
+
+func (queue *Queue) EndPass() {
+	queue.message <- messagePassEnd
+}
+
+func passenger(queue *Queue) {
+	for {
+		time.Sleep(time.Duration(rand.Intn(10000)) * time.Millisecond)
+		queue.StartPass()
+		fmt.Println("Passenger starts")
+
+		time.Sleep(time.Duration(rand.Intn(2000)) * time.Millisecond)
+		fmt.Println("Passenger ends")
+		queue.EndPass()
+	}
+}
+
+func main() {
+	var queue *Queue = &Queue{}
+	queue.New()
+	fmt.Println(queue)
+
+	for i := 0; i < 10; i++ {
+		go passenger(queue)
+	}
+	for i := 0; i < 5; i++ {
+		go ticketIssue(queue)
+	}
+	select {}
+}
+```
+
+![Result of set](./images/queue_2.png)
+
 
 ## Contributing
 
