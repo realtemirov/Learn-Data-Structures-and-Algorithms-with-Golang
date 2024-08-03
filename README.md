@@ -68,6 +68,7 @@ Welcome to the repository for the exercises from the book **[Learn Data Structur
 		* [Queues](#queues)
 			* [Simple Queues](#simple-queue)
 			* [Synchronized Queues](#synchronized-queue)
+		* [Stacks](#stacks)
 
 
 ## Hello World !
@@ -2093,7 +2094,7 @@ func main() {
 }
 ```
 
-![Result of set](./images/tuples_2.png)
+![Result of tuples](./images/tuples_2.png)
 
 ## Queues
 
@@ -2173,7 +2174,7 @@ func main() {
 }
 ```
 
-![Result of set](./images/queue_1.png)
+![Result of queue](./images/queue_1.png)
 
 ### Synchronized queue
 [Code](./Chapter03/05-Queues/synchronized_queue.go)
@@ -2299,8 +2300,82 @@ func main() {
 }
 ```
 
-![Result of set](./images/queue_2.png)
+![Result of queue](./images/queue_2.png)
 
+## Stacks
+
+[Code](./Chapter03/06-Stacks/stacks.go)
+
+```go
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+type Element struct {
+	Value int
+}
+type Stack struct {
+	elements     []*Element
+	elementCount int
+}
+
+func (element *Element) String() string {
+	return strconv.Itoa(element.Value)
+}
+
+func (stack *Stack) New() {
+	stack.elements = make([]*Element, 0)
+}
+
+func (stack *Stack) Push(element *Element) {
+	stack.elements = append(stack.elements[:stack.elementCount], element)
+	stack.elementCount++
+}
+
+func (stack *Stack) Pop() *Element {
+	if stack.elementCount == 0 {
+		return nil
+	}
+
+	var (
+		length  int      = len(stack.elements)
+		element *Element = stack.elements[length-1]
+	)
+
+	if length > 1 {
+		stack.elements = stack.elements[:length-1]
+	} else {
+		stack.elements = stack.elements[0:]
+	}
+
+	stack.elementCount = len(stack.elements)
+
+	return element
+}
+
+func main() {
+	var (
+		stack    *Stack   = &Stack{}
+		element1 *Element = &Element{3}
+		element2 *Element = &Element{5}
+		element3 *Element = &Element{7}
+		element4 *Element = &Element{9}
+	)
+	stack.New()
+
+	stack.Push(element1)
+	stack.Push(element2)
+	stack.Push(element3)
+	stack.Push(element4)
+
+	fmt.Println(stack.Pop(), stack.Pop(), stack.Pop(), stack.Pop())
+}
+```
+
+![Result of stacks](./images/stack.png)
 
 ## Contributing
 
